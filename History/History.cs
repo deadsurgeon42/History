@@ -1680,10 +1680,9 @@ namespace History
 		{
 			while (!Netplay.disconnect)
 			{
-				HCommand command;
 				try
 				{
-					if (!CommandQueue.TryTake(out command, -1, Cancel.Token))
+					if (!CommandQueue.TryTake(out var command, -1, Cancel.Token))
 						return;
 					try
 					{
@@ -1712,8 +1711,7 @@ namespace History
 					return;
 				}
 				int radius = 10000;
-				int time;
-				if (!TShock.Utils.TryParseTime(e.Parameters[1], out time) || time <= 0)
+				if (!TShock.Utils.TryParseTime(e.Parameters[1], out int time) || time <= 0)
 					e.Player.SendErrorMessage("Invalid time.");
 				else if (e.Parameters.Count == 3 && (!int.TryParse(e.Parameters[2], out radius) || radius <= 0))
 					e.Player.SendErrorMessage("Invalid radius.");
@@ -1734,8 +1732,7 @@ namespace History
 				return;
 			}
 			int radius = 10000;
-			int time;
-			if (!TShock.Utils.TryParseTime(e.Parameters[1], out time) || time <= 0)
+			if (!TShock.Utils.TryParseTime(e.Parameters[1], out int time) || time <= 0)
 			{
 				e.Player.SendErrorMessage("Invalid time.");
 			}
@@ -1750,16 +1747,17 @@ namespace History
 		}
 		void Rollback(CommandArgs e)
 		{
-			if (e.Parameters.Count != 2 && e.Parameters.Count != 3)
+			if (e.Parameters.Count != 3)
 			{
 				e.Player.SendErrorMessage("Invalid syntax! Proper syntax: /rollback <account> <time> [radius]");
 				return;
 			}
 			int radius = 10000;
-			int time;
-			if (!TShock.Utils.TryParseTime(e.Parameters[1], out time) || time <= 0)
+			if (!TShock.Utils.TryParseTime(e.Parameters[1], out int time) || time <= 0)
 				e.Player.SendErrorMessage("Invalid time.");
-			else if (e.Parameters.Count == 3 && (!int.TryParse(e.Parameters[2], out radius) || radius <= 0))
+			else if (!int.TryParse(e.Parameters[2], out radius) || radius <= 0)
+				e.Player.SendErrorMessage("Invalid radius.");
+			else if (radius > 100 && !e.Player.HasPermission("history.editall"))
 				e.Player.SendErrorMessage("Invalid radius.");
 			else
 				CommandQueue.Add(new RollbackCommand(e.Parameters[0], time, radius, e.Player));
@@ -1771,8 +1769,8 @@ namespace History
 				e.Player.SendErrorMessage("Invalid syntax! Proper syntax: /prunehist <time>");
 				return;
 			}
-			int time;
-			if (TShock.Utils.TryParseTime(e.Parameters[0], out time) && time > 0)
+
+			if (TShock.Utils.TryParseTime(e.Parameters[0], out int time) && time > 0)
 				CommandQueue.Add(new PruneCommand(time, e.Player));
 			else
 				e.Player.SendErrorMessage("Invalid time.");
