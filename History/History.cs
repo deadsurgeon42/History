@@ -64,7 +64,7 @@ namespace History
 		{
 			if (disposing)
 			{
-				ServerApi.Hooks.GameInitialize.Deregister(this, OnInitialize);
+				ServerApi.Hooks.GamePostInitialize.Deregister(this, OnInitialize);
 				ServerApi.Hooks.NetGetData.Deregister(this, OnGetData);
 				ServerApi.Hooks.WorldSave.Deregister(this, OnSaveWorld);
 
@@ -73,7 +73,7 @@ namespace History
 		}
 		public override void Initialize()
 		{
-			ServerApi.Hooks.GameInitialize.Register(this, OnInitialize);
+			ServerApi.Hooks.GamePostInitialize.Register(this, OnInitialize);
 			ServerApi.Hooks.NetGetData.Register(this, OnGetData);
 			ServerApi.Hooks.WorldSave.Register(this, OnSaveWorld);
 			initBreaks();
