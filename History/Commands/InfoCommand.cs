@@ -36,7 +36,7 @@ namespace History.Commands
 			string XYReq = string.Format("XY / 65536 BETWEEN {0} AND {1} AND XY & 65535 BETWEEN {2} AND {3}", lowX, highX, lowY, highY);
 
 			using (QueryResult reader =
-				History.Database.QueryReader("SELECT Action, XY FROM History WHERE Account = @0 AND Time >= @1 AND " + XYReq + " AND WorldID = @2",
+				History.Database.QueryReader($"SELECT Action, XY FROM {History.TableName} WHERE Account = @0 AND Time >= @1 AND " + XYReq + " AND WorldID = @2",
 				account, lookupTime, Main.worldID))
 			{
 				while (reader.Read())

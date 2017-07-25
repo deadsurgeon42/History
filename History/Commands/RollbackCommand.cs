@@ -39,7 +39,7 @@ namespace History.Commands
 			string XYReq = string.Format("XY / 65536 BETWEEN {0} AND {1} AND XY & 65535 BETWEEN {2} AND {3}", lowX, highX, lowY, highY);
 
 			using (QueryResult reader =
-				History.Database.QueryReader("SELECT * FROM History WHERE Account = @0 AND Time >= @1 AND " + XYReq + " AND WorldID = @2",
+				History.Database.QueryReader($"SELECT * FROM {History.TableName} WHERE Account = @0 AND Time >= @1 AND " + XYReq + " AND WorldID = @2",
 				account, rollbackTime, Main.worldID))
 			{
 				while (reader.Read())
@@ -63,7 +63,7 @@ namespace History.Commands
 			}
 			if (!reenact)
 			{
-				History.Database.Query("DELETE FROM History WHERE Account = @0 AND Time >= @1 AND " + XYReq + " AND WorldID = @2",
+				History.Database.Query($"DELETE FROM {History.TableName} WHERE Account = @0 AND Time >= @1 AND " + XYReq + " AND WorldID = @2",
 					account, rollbackTime, Main.worldID);
 			}
 			if (Main.rand == null)

@@ -25,7 +25,7 @@ namespace History.Commands
 			List<Action> actions = new List<Action>();
 
 			using (QueryResult reader =
-				History.Database.QueryReader("SELECT Account, Action, Data, Time FROM History WHERE XY = @0 AND WorldID = @1",
+				History.Database.QueryReader($"SELECT Account, Action, Data, Time FROM {History.TableName} WHERE XY = @0 AND WorldID = @1",
 				(x << 16) + y, Main.worldID))
 			{
 				while (reader.Read())

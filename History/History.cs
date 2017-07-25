@@ -31,6 +31,8 @@ namespace History
 		public static DateTime Date = DateTime.UtcNow;
 		public const int SaveCount = 10;
 
+	  public static string TableName => "history_" + Main.worldID;
+
 		private bool[] AwaitingHistory = new bool[256];
 		public override string Author
 		{
@@ -1642,7 +1644,7 @@ namespace History
 			}
 			SqlTableCreator sqlcreator = new SqlTableCreator(Database,
 				Database.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
-			sqlcreator.EnsureTableStructure(new SqlTable("History",
+			sqlcreator.EnsureTableStructure(new SqlTable(TableName,
 				new SqlColumn("Time", MySqlDbType.Int32),
 				new SqlColumn("Account", MySqlDbType.VarChar) { Length = 50 },
 				new SqlColumn("Action", MySqlDbType.Int32),
