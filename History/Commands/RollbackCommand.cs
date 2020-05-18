@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Terraria;
+using Terraria.Utilities;
 using TShockAPI;
 using TShockAPI.DB;
 
@@ -66,10 +67,11 @@ namespace History.Commands
 					account, rollbackTime, Main.worldID);
 			}
 			if (Main.rand == null)
-				Main.rand = new Random();
+				Main.rand = new UnifiedRandom();
+      /*
 			if (WorldGen.genRand == null)
 				WorldGen.genRand = new Random();
-
+      */
 			for (int i = 0; i >= 0 && i < History.Actions.Count; i++)
 			{
 				Action action = History.Actions[i];

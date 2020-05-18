@@ -3,6 +3,7 @@ using System.Text;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Tile_Entities;
+using Terraria.Localization;
 using TShockAPI;
 
 namespace History
@@ -145,14 +146,14 @@ namespace History
 					if (Main.tile[x, y].active())
 					{
 						Main.tile[x, y].color((byte)data);
-						NetMessage.SendData(63, -1, -1, "", x, y, data, 0f, 0);
+						NetMessage.SendData(63, -1, -1, NetworkText.Empty, x, y, data, 0f, 0);
 					}
 					break;
 				case 26://paint wall
 					if (Main.tile[x, y].wall > 0)
 					{
 						Main.tile[x, y].wallColor((byte)data);
-						NetMessage.SendData(64, -1, -1, "", x, y, data, 0f, 0);
+						NetMessage.SendData(64, -1, -1, NetworkText.Empty, x, y, data, 0f, 0);
 					}
 					break;
 				case 27://update sign
@@ -286,7 +287,7 @@ namespace History
 					if (delete)
 					{
 						WorldGen.KillTile(x, y, false, false, true);
-						NetMessage.SendData(17, -1, -1, "", 0, x, y);
+						NetMessage.SendData(17, -1, -1, NetworkText.Empty, 0, x, y);
 					}
 					break;
 				case 2://del wall
@@ -390,14 +391,14 @@ namespace History
 					if (Main.tile[x, y].active())
 					{
 						Main.tile[x, y].color((byte)paint);
-						NetMessage.SendData(63, -1, -1, "", x, y, paint, 0f, 0);
+						NetMessage.SendData(63, -1, -1, NetworkText.Empty, x, y, paint, 0f, 0);
 					}
 					break;
 				case 26://paint wall
 					if (Main.tile[x, y].wall > 0)
 					{
 						Main.tile[x, y].wallColor((byte)paint);
-						NetMessage.SendData(64, -1, -1, "", x, y, paint, 0f, 0);
+						NetMessage.SendData(64, -1, -1, NetworkText.Empty, x, y, paint, 0f, 0);
 					}
 					break;
 				case 27://updatesign
