@@ -1333,7 +1333,7 @@ namespace History
 							//TSPlayer.All.SendInfoMessage($"Type: {type}");
 
 							TSPlayer ply = TShock.Players[e.Msg.whoAmI];
-							string logName = ply.User == null ? "unregistered" : ply.User.Name;
+							string logName = ply.Account == null ? "unregistered" : ply.Account.Name;
 							//Checking history now requires build permission in the area due to load order, if needed this could be fixed by having an alternate function check this packet on a higher order.
 							if (AwaitingHistory[e.Msg.whoAmI])
 							{
@@ -1371,7 +1371,7 @@ namespace History
 							bool dir = BitConverter.ToBoolean(e.Msg.readBuffer, e.Index + 10);
 
 							TSPlayer ply = TShock.Players[e.Msg.whoAmI];
-							string logName = ply.User == null ? "unregistered" : ply.User.Name;
+							string logName = ply.Account == null ? "unregistered" : ply.Account.Name;
 							//Checking history now requires build permission in the area due to load order, if needed this could be fixed by having an alternate function check this packet on a higher order.
 							if (AwaitingHistory[e.Msg.whoAmI])
 							{
@@ -1387,7 +1387,7 @@ namespace History
 						}
 						break;
 					//chest delete
-					case PacketTypes.TileKill:
+					case PacketTypes.PlaceChest:
 						{
 							byte flag = e.Msg.readBuffer[e.Index];
 							int X = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 1);
@@ -1395,7 +1395,7 @@ namespace History
 							int style = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 5);
 							byte style2 = (byte)style;
 							TSPlayer ply = TShock.Players[e.Msg.whoAmI];
-							string logName = ply.User == null ? "unregistered" : ply.User.Name;
+							string logName = ply.Account == null ? "unregistered" : ply.Account.Name;
 							//PlaceChest
 							if (flag == 0)
 							{
@@ -1468,7 +1468,7 @@ namespace History
 							int Y = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 2);
 							byte color = e.Msg.readBuffer[e.Index + 4];
 
-							string logName = TShock.Players[e.Msg.whoAmI].User == null ? "unregistered" : TShock.Players[e.Msg.whoAmI].User.Name;
+							string logName = TShock.Players[e.Msg.whoAmI].Account == null ? "unregistered" : TShock.Players[e.Msg.whoAmI].Account.Name;
 							Queue(logName, X, Y, 25, color, 0, Main.tile[X, Y].color());
 						}
 						break;
@@ -1478,7 +1478,7 @@ namespace History
 							int Y = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 2);
 							byte color = e.Msg.readBuffer[e.Index + 4];
 
-							string logName = TShock.Players[e.Msg.whoAmI].User == null ? "unregistered" : TShock.Players[e.Msg.whoAmI].User.Name;
+							string logName = TShock.Players[e.Msg.whoAmI].Account == null ? "unregistered" : TShock.Players[e.Msg.whoAmI].Account.Name;
 							Queue(logName, X, Y, 26, color, 0, Main.tile[X, Y].wallColor());
 						}
 						break;
@@ -1489,7 +1489,7 @@ namespace History
 							int Y = BitConverter.ToInt16(e.Msg.readBuffer, e.Index + 4);
 							byte s = 0;
 							adjustFurniture(ref X, ref Y, ref s); //Adjust coords so history picks it up, readSign() adjusts back to origin anyway
-							string logName = TShock.Players[e.Msg.whoAmI].User == null ? "unregistered" : TShock.Players[e.Msg.whoAmI].User.Name;
+							string logName = TShock.Players[e.Msg.whoAmI].Account == null ? "unregistered" : TShock.Players[e.Msg.whoAmI].Account.Name;
 							Queue(logName, X, Y, 27, data: signI, text: Main.sign[signI].text);
 						}
 						break;
@@ -1504,7 +1504,7 @@ namespace History
 
 							bool direction = Main.player[e.Msg.whoAmI].direction == 1;
 							TSPlayer ply = TShock.Players[e.Msg.whoAmI];
-							string logName = ply.User == null ? "unregistered" : ply.User.Name;
+							string logName = ply.Account == null ? "unregistered" : ply.Account.Name;
 							int minX = X1, maxX = X2, minY = Y1, maxY = Y2;
 							int drawX = direction ? minX : maxX;
 							int drawY = direction ? maxY : minY;
@@ -1680,7 +1680,7 @@ namespace History
 
 		void QueueCallback(object t)
 		{
-			while (!Netplay.disconnect)
+			while (!Netplay.Disconnect)
 			{
 				HCommand command;
 				try
