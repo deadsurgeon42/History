@@ -1037,6 +1037,7 @@ namespace History
 			{
 				case 0: //killtile
 				case 4: //killtilenoitem
+                case 20: //trykilltile
 					ushort tileType = Main.tile[X, Y].type;
 					byte pStyle = 0;
 					if (Main.tile[X, Y].active() && !Main.tileCut[tileType] && tileType != 127)
@@ -1295,8 +1296,26 @@ namespace History
 					{
 						Queue(account, X, Y, 17);
 					}
+                    break;
+                case 19: //Acutate
+
 					break;
-			}
+                case 21: //ReplaceTile
+                    if (Main.tile[X, Y].active())
+                    {
+                        Queue(account, X, Y, 21, type, style);
+                    }
+                    break;
+                case 22: //ReplaceWall
+                    if (Main.tile[X, Y].wall >  0)
+                    {
+                        Queue(account, X, Y, 22, type);
+                    }
+                    break;
+                case 23: //SlopePoundTile
+
+                    break;
+            }
 		}
 
 		void OnGetData(GetDataEventArgs e)

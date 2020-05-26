@@ -166,6 +166,7 @@ namespace History
 			{
 				case 0:
 				case 4://del tile
+                case 20://trykilltile 
 					if (Main.tileSand[data])//sand falling compensation (need to check up for top of sand)
 					{
 						int newY = y;
@@ -387,6 +388,10 @@ namespace History
 						TSPlayer.All.SendTileSquare(x, y, 1);
 					}
 					break;
+                case 21:
+                    break;
+                case 22:
+                    break;
 				case 25://paint tile
 					if (Main.tile[x, y].active())
 					{
@@ -440,6 +445,7 @@ namespace History
 			{
 				case 0:
 				case 4:
+                case 20:
 					return string.Format("{0} {1} broke tile {2}. ({3})", date, account, data, dhms);
 				case 1:
 					return string.Format("{0} {1} placed tile {2}. ({3})", date, account, data, dhms);
@@ -462,9 +468,11 @@ namespace History
 					return string.Format("{0} {1} slope/pound tile. ({2})", date, account, dhms);
 				case 8:
 					return string.Format("{0} {1} placed actuator. ({2})", date, account, dhms);
-				case 9:
-					return string.Format("{0} {1} broke actuator. ({2})", date, account, dhms);
-				case 25:
+                case 21:
+                    return string.Format("{0} {1} replaced tile. ({2})", date, account, dhms);
+                case 22:
+                    return string.Format("{0} {1} replaced wall. ({2})", date, account, dhms);
+                case 25:
 				case 26:
 					return string.Format("{0} {1} painted tile/wall. ({2})", date, account, dhms);
 				case 27:
