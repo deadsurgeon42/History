@@ -1303,13 +1303,15 @@ namespace History
                 case 21: //ReplaceTile
                     if (Main.tile[X, Y].active())
                     {
-                        Queue(account, X, Y, 21, type, style);
+                        int combinedInt = Main.tile[X, Y].type | (type << 16);
+                        Queue(account, X, Y, 21, (ushort)combinedInt, style);
                     }
                     break;
                 case 22: //ReplaceWall
                     if (Main.tile[X, Y].wall >  0)
                     {
-                        Queue(account, X, Y, 22, type);
+                        int combinedInt = Main.tile[X, Y].wall | (type << 16);
+                        Queue(account, X, Y, 22, (ushort)combinedInt);
                     }
                     break;
                 case 23: //SlopePoundTile

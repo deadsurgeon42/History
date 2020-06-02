@@ -389,8 +389,23 @@ namespace History
 					}
 					break;
                 case 21:
+                    if (Main.tile[x, y].active())
+                    {
+                        int prevTile = data & 0xFFFF;
+                        int placedTile = (data >> 16) & 0xFFFF;
+
+                        WorldGen.PlaceTile(x, y, prevTile, false, true, -1, style: style);
+                        TSPlayer.All.SendTileSquare(x, y, 1);
+                    }
                     break;
                 case 22:
+                    int prevWall = data & 0xFFFF;
+                    int placedWall = (data >> 16) & 0xFFFF;
+                    if (Main.tile[x, y].wall != prevWall) //change if not what was replaced
+                    {
+                        Main.tile[x, y].wall = (byte)prevWall;
+                        TSPlayer.All.SendTileSquare(x, y, 1);
+                    }
                     break;
 				case 25://paint tile
 					if (Main.tile[x, y].active())
